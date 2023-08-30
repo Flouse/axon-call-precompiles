@@ -31,8 +31,10 @@ jobs:
     - run: ls $GITHUB_WORKSPACE
       if: always()
 
+    - run: du -hd2
+      if: always()
+
     - name: Cache of Cargo
-      id: cargo-cache
       uses: actions/cache@v3
       with:
         path: |
@@ -40,8 +42,12 @@ jobs:
           ~/.cargo/registry/index/
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
-          target/
           components/axon/target/
+          components/emitter/target/
         key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ runner.arch }}-cargo
+
+    - name: Build Axon
+      working-directory: components/axon
+      run: cargo build
