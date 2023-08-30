@@ -35,7 +35,7 @@ jobs:
           ~/.cargo/git/db/
           components/axon/target/
           components/emitter/target/
-        key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ubuntu-22.04-${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ runner.arch }}-cargo
 
@@ -88,7 +88,7 @@ jobs:
       run: |
         node -v
         yarn
-        yarn test | tee > ${{ runner.temp }}/call-ckb-vm.log
+        yarn test | tee ${{ runner.temp }}/call-ckb-vm.log
 
     - name: Archive logs
       if: failure()
