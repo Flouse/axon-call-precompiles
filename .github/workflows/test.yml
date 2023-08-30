@@ -84,11 +84,12 @@ jobs:
           ]
         }' | curl -H 'content-type: application/json' -d @- http://localhost:8120
 
-    - name: Test contract
+    - name: Test CallCkbVm contract
       run: |
         node -v
         yarn
-        yarn test | tee ${{ runner.temp }}/call-ckb-vm.log
+        yarn compile
+        yarn script:call-ckb-vm | tee ${{ runner.temp }}/call-ckb-vm.log
 
     - name: Archive logs
       if: failure()
