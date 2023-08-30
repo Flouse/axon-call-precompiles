@@ -11,13 +11,10 @@ cargo run -- run \
 # Start Emitter
 
 ```
-git clone https://github.com/axonweb3/emitter.git
+git clone -b joyid-debug https://github.com/axonweb3/emitter.git
 cd emitter
-git checkout joyid-debug
-cd emitter
-touch scan_state
-
-cargo run -- -s ./ -c https://testnet.ckb.dev --i http://127.0.0.1:8000
+touch emitter/scan_state
+cargo run -- -s ./ -c https://testnet.ckb.dev/rpc --i http://127.0.0.1:8000
 ```
 
 Register the cell containing ed25519 contract binary.
