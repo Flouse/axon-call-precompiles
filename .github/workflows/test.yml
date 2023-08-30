@@ -10,38 +10,38 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout axon-call-precompiles
+      uses: actions/checkout@v3
+    - name: Checkout Axon
+      uses: actions/checkout@v3
       with:
         ref: refactor-precompile-input
         repository: axonweb3/axon
         path: components/axon
-
-    - uses: actions/checkout@v3
+    - name: Checkout axonweb3/emitter
+      uses: actions/checkout@v3
       with:
         ref: joyid-debug
         repository: axonweb3/emitter
         path: components/emitter
 
-    - uses: actions/checkout@v3
-      with:
-        path: axon-call-precompiles
-
-    - run: pwd
+    - run: pwd & ls
       if: always()
 
     - run: ls $GITHUB_WORKSPACE
       if: always()
 
-    # - name: Cache of Cargo
-    #   id: cargo-test-cache
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: |
-    #       ~/.cargo/bin/
-    #       ~/.cargo/registry/index/
-    #       ~/.cargo/registry/cache/
-    #       ~/.cargo/git/db/
-    #       target/
-    #     key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    #     restore-keys: |
-    #       ${{ runner.os }}-${{ runner.arch }}-cargo
+    - name: Cache of Cargo
+      id: cargo-cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+          components/axon/target/
+        key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ runner.arch }}-cargo
