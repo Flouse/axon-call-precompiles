@@ -3,7 +3,9 @@
 ```
 git clone -b refactor-precompile-input https://github.com/axonweb3/axon.git
 cd axon
-cargo run -- run -c devtools/chain/config.toml -s devtools/chain/specs/single_node/chain-spec.toml
+cargo run -- run \
+  --config=devtools/chain/config.toml \
+  --chain-spec=devtools/chain/specs/single_node/chain-spec.toml
 ```
 
 # Start Emitter

@@ -14,21 +14,23 @@ jobs:
       with:
         ref: refactor-precompile-input
         repository: axonweb3/axon
-        path: axon
+        path: components/axon
 
     - uses: actions/checkout@v3
       with:
-        ref: refactor-precompile-input
+        ref: joyid-debug
         repository: axonweb3/emitter
-        path: emitter
+        path: components/emitter
 
     - uses: actions/checkout@v3
       with:
         path: axon-call-precompiles
 
     - run: pwd
+      if: always()
 
     - run: ls $GITHUB_WORKSPACE
+      if: always()
 
     # - name: Cache of Cargo
     #   id: cargo-test-cache
