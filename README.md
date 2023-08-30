@@ -1,6 +1,6 @@
 # Start Axon
 
-```
+```bash
 git clone -b refactor-precompile-input https://github.com/axonweb3/axon.git
 cd axon
 cargo run -- run \
@@ -10,7 +10,7 @@ cargo run -- run \
 
 # Start Emitter
 
-```
+```bash
 git clone -b joyid-debug https://github.com/axonweb3/emitter.git
 cd emitter
 touch emitter/scan_state
@@ -38,9 +38,9 @@ echo '{
 ```
 
 # Test contract
-```
+```bash
 yarn
-npx hardhat run scripts/call-ckb-vm.ts --network axon
+yarn test
 ```
 
 output

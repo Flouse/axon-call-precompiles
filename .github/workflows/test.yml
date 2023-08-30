@@ -25,15 +25,6 @@ jobs:
         repository: axonweb3/emitter
         path: components/emitter
 
-    - run: pwd & ls
-      if: always()
-
-    - run: ls $GITHUB_WORKSPACE
-      if: always()
-
-    - run: du -hd2
-      if: always()
-
     - name: Cache of Cargo
       uses: actions/cache@v3
       with:
@@ -62,7 +53,7 @@ jobs:
         cargo run -- run \
           --config=devtools/chain/config.toml \
           --chain-spec=devtools/chain/specs/single_node/chain-spec.toml \
-          > ${{ runner.temp }}/axon.log
+          > ${{ runner.temp }}/axon.log &
 
     - name: Start Emitter
       working-directory: components/emitter
@@ -72,7 +63,7 @@ jobs:
           -s ./ \
           -c https://testnet.ckb.dev/rpc \
           --i http://127.0.0.1:8000 \
-          > ${{ runner.temp }}/emitter.log
+          > ${{ runner.temp }}/emitter.log &
 
     - name: Register the cell containing ed25519 contract binary
       run: |
@@ -95,7 +86,9 @@ jobs:
 
     - name: Test contract
       run: |
-        yarn && yarn test
+        node -v
+        yarn
+        yarn test | tee > ${{ runner.temp }}/call-ckb-vm.log
 
     - name: Archive logs
       if: failure()
@@ -105,3 +98,4 @@ jobs:
         path: |
           ${{ runner.temp }}/axon.log
           ${{ runner.temp }}/emitter.log
+          ${{ runner.temp }}/call-ckb-vm.log
